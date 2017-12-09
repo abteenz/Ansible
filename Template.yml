@@ -1,0 +1,19 @@
+---
+- hosts: HQ
+  gather_facts: true
+  connection: local
+ 
+  tasks:
+   - name: show arp
+     ios_command:
+      commands:
+        - show ip arp
+      username: ccrcadmin
+      password: praDRuS!4r@d
+      auth_pass: praDRuS!4r@d
+     register: config
+   
+   - name: save output somewhere
+     copy:
+      content: "{{ config.stdout[0] }}"
+      dest: "/home/ansible/outputs/show_run_{{ inventory_hostname }}.txt"
